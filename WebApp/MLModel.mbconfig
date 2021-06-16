@@ -1,0 +1,69 @@
+﻿{
+  "TrainingConfigurationVersion": 0,
+  "TrainingTime": 600,
+  "Scenario": {
+    "ScenarioType": "Classification"
+  },
+  "DataSource": {
+    "DataSourceType": "SQL",
+    "ConnectionString": "Data Source=(localdb)\\MsSqlLocalDb;Initial Catalog=SpeachDb;Integrated Security=True",
+    "CommandString": "SELECT CAST(Id as REAL), Content, Party FROM [dbo].[Speaches]",
+    "DatabaseName": "SpeachDb",
+    "SelectedTableDbo": "dbo",
+    "TableName": "Speaches",
+    "ColumnProperties": [
+      {
+        "ColumnName": "Id",
+        "ColumnPurpose": "Ignore",
+        "ColumnDataFormat": "Single",
+        "IsCategorical": false
+      },
+      {
+        "ColumnName": "Content",
+        "ColumnPurpose": "Feature",
+        "ColumnDataFormat": "String",
+        "IsCategorical": false
+      },
+      {
+        "ColumnName": "Party",
+        "ColumnPurpose": "Label",
+        "ColumnDataFormat": "String",
+        "IsCategorical": true
+      }
+    ]
+  },
+  "Environment": {
+    "EnvironmentType": "LocalCPU"
+  },
+  "RunHistory": {
+    "Trials": [
+      {
+        "TrainerName": "LbfgsMaximumEntropyMulti",
+        "Score": 0.957089552238806,
+        "RuntimeInSeconds": 144.35600280761719
+      },
+      {
+        "TrainerName": "FastForestOva",
+        "Score": 0.94402985074626866,
+        "RuntimeInSeconds": 110.40599822998047
+      },
+      {
+        "TrainerName": "FastTreeOva",
+        "Score": 0.90111940298507465,
+        "RuntimeInSeconds": 87.4530029296875
+      },
+      {
+        "TrainerName": "SdcaLogisticRegressionOva",
+        "Score": 0.292910447761194,
+        "RuntimeInSeconds": 96.787002563476562
+      },
+      {
+        "TrainerName": "SdcaMaximumEntropyMulti",
+        "Score": 0.292910447761194,
+        "RuntimeInSeconds": 34.895000457763672
+      }
+    ],
+    "Pipeline": "[{\"EstimatorType\":\"FeaturizeText\",\"Inputs\":[\"Content\"],\"Outputs\":[\"Content\"]},{\"EstimatorType\":\"Concatenate\",\"Inputs\":[\"Content\"],\"Outputs\":[\"Features\"]},{\"EstimatorType\":\"MapValueToKey\",\"Inputs\":[\"Party\"],\"Outputs\":[\"Party\"]},{\"EstimatorType\":\"NormalizeMinMax\",\"Inputs\":[\"Features\"],\"Outputs\":[\"Features\"]},{\"LabelColumnName\":\"Party\",\"FeatureColumnName\":\"Features\",\"L1Regularization\":\"0.181153838073242\",\"L2Regularization\":\"2.61627209906552\",\"EstimatorType\":\"LbfgsMaximumEntropyMulti\",\"Inputs\":[\"Party\"],\"Outputs\":[\"Features\"]},{\"EstimatorType\":\"MapKeyToValue\",\"Inputs\":[\"PredictedLabel\"],\"Outputs\":[\"PredictedLabel\"]}]",
+    "MetricName": "MicroAccuracy"
+  }
+}
