@@ -1,0 +1,58 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Speach Analyzer</h1>
+    <p>Bitte geben Sie eine Rede an.</p>
+    <p>Ich werde versuchen, sie einer österreichischen Partei zuzuordnen.</p>
+    <form method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <textarea asp-for="Speach" class="w-100" style="height: 300px;">@Model.Speach</textarea>
+        <span asp-validation-for="Speach" class="text-danger"></span>
+        <div>
+            <button id="submitBtn" type="submit" class="btn-primary" onclick="onSubmit()">Absenden</button>
+        </div>
+    </form>
+
+    @if (!string.IsNullOrEmpty(Model.Prediction))
+    {
+        <div>
+            <h2>Ergebnis:</h2>
+            <p>@Model.Prediction</p>
+        </div>
+        <div>
+            <table class="table">
+                <thead class="thead-light">
+                    <tr>
+                        <th>Partei</th>
+                        <th>Wahrscheinlichkeit</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (var score in Model.Scores)
+                    {
+                        var rowClass = @Model.Prediction == @score.Party ? "table-active" : "";
+
+                        <tr class="@rowClass">
+                            <td>@score.Party</td>
+                            <td>@score.Score</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+    }
+
+</div>
+
+<script>
+    function onSubmit() {
+        var btn = document.getElementById('submitBtn');
+        btn.innerText = 'Bitte warten ...';
+    }
+</script>
