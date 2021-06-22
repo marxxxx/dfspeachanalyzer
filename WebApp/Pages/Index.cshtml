@@ -23,29 +23,31 @@
             <h2>Ergebnis:</h2>
             <p>@Model.Prediction</p>
         </div>
-        <div>
-            <table class="table">
-                <thead class="thead-light">
-                    <tr>
-                        <th>Partei</th>
-                        <th>Wahrscheinlichkeit</th>
-                    </tr>
-                </thead>
-                <tbody>
-
-                    @foreach (var score in Model.Scores)
-                    {
-                        var rowClass = @Model.Prediction == @score.Party ? "table-active" : "";
-
-                        <tr class="@rowClass">
-                            <td>@score.Party</td>
-                            <td>@score.Score</td>
+        @if (Model.Scores != null)
+        {
+            <div>
+                <table class="table">
+                    <thead class="thead-light">
+                        <tr>
+                            <th>Partei</th>
+                            <th>Wahrscheinlichkeit</th>
                         </tr>
-                    }
-                </tbody>
-            </table>
-        </div>
+                    </thead>
+                    <tbody>
 
+                        @foreach (var score in Model.Scores)
+                        {
+                            var rowClass = @Model.Prediction == @score.Party ? "table-active" : "";
+
+                            <tr class="@rowClass">
+                                <td>@score.Party</td>
+                                <td>@score.Score</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
     }
 
 </div>
