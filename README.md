@@ -1,6 +1,6 @@
 # Introduction
 
-This project shows training and application of a custom machine learning model trained with the ML.NET Model Builder to predict political party affinity based on Speach/Interview Input data.
+This project shows training and application of a custom machine learning model trained with the [ML.NET Model Builder](https://dotnet.microsoft.com/apps/machinelearning-ai/ml-dotnet/model-builder) to predict political party affinity based on Speach/Interview Input data.
 
 # Projects
 
